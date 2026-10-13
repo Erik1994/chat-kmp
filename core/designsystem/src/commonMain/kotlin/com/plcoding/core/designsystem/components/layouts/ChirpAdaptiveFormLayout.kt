@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.plcoding.core.designsystem.components.brand.ChirpBrandLogo
@@ -34,7 +33,6 @@ import com.plcoding.core.designsystem.theme.extended
 import com.plcoding.core.presentation.util.DeviceConfiguration
 import com.plcoding.core.presentation.util.currentDeviceConfiguration
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.ui.tooling.preview.PreviewParameter
 
 @Composable
 fun ChirpAdaptiveFormLayout(

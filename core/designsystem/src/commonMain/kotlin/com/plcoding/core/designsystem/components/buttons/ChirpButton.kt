@@ -34,7 +34,7 @@ enum class ChirpButtonStyle {
 fun ChirpButton(
     modifier: Modifier = Modifier,
     text: String,
-    style: ChirpButtonStyle,
+    style: ChirpButtonStyle = ChirpButtonStyle.PRIMARY,
     onClick: () -> Unit,
     enabled: Boolean = true,
     isLoading: Boolean = false,
