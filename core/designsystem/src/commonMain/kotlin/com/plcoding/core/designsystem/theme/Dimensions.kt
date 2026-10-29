@@ -48,4 +48,4 @@ data class Dimensions(
     val dimen500: Dp = 500.dp,
 )
 
-internal val LocalDimensions = staticCompositionLocalOf { Dimensions() }
+val LocalDimensions = staticCompositionLocalOf { Dimensions() }

@@ -77,8 +77,10 @@ fun ChirpAdaptiveFormLayout(
             Row(
                 modifier = modifier
                     .fillMaxSize()
-                    .consumeWindowInsets(WindowInsets.displayCutout),
-                horizontalArrangement = Arrangement.spacedBy(dimensions.dimen16)
+                    .consumeWindowInsets(WindowInsets.displayCutout)
+                    .consumeWindowInsets(WindowInsets.navigationBars)
+                    .padding(start = dimensions.dimen32),
+                horizontalArrangement = Arrangement.spacedBy(dimensions.dimen16),
             ) {
                 Column(
                     modifier = Modifier
@@ -90,14 +92,17 @@ fun ChirpAdaptiveFormLayout(
                     AuthHeaderSection(
                         headerText = headerText,
                         headerColor = headerColor,
-                        errorText = errorText
+                        errorText = errorText,
+                        headerTextAlignment = TextAlign.Start
                     )
                 }
                 ChirpSurface(
                     modifier = Modifier
                         .weight(1f),
                 ) {
+                    Spacer(modifier = Modifier.height(dimensions.dimen16))
                     formContent()
+                    Spacer(modifier = Modifier.height(dimensions.dimen16))
                 }
             }
         }
@@ -123,7 +128,6 @@ fun ChirpAdaptiveFormLayout(
                             horizontal = dimensions.dimen24,
                             vertical = dimensions.dimen32
                         ),
-                    verticalArrangement = Arrangement.spacedBy(dimensions.dimen24),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     AuthHeaderSection(
@@ -142,14 +146,15 @@ fun ChirpAdaptiveFormLayout(
 fun ColumnScope.AuthHeaderSection(
     headerText: String,
     headerColor: Color,
-    errorText: String? = null
+    errorText: String? = null,
+    headerTextAlignment: TextAlign = TextAlign.Center
 ) {
     Text(
         modifier = Modifier.fillMaxWidth(),
         text = headerText,
         style = MaterialTheme.typography.titleLarge,
         color = headerColor,
-        textAlign = TextAlign.Center
+        textAlign = headerTextAlignment
     )
     AnimatedVisibility(
         errorText != null
@@ -160,7 +165,7 @@ fun ColumnScope.AuthHeaderSection(
                 text = it,
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.Center
+                textAlign = headerTextAlignment
             )
         }
     }
