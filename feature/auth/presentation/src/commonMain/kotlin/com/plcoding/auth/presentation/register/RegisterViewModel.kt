@@ -3,20 +3,33 @@ package com.plcoding.auth.presentation.register
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import chirp.feature.auth.presentation.generated.resources.Res
+import chirp.feature.auth.presentation.generated.resources.error_account_exists
 import chirp.feature.auth.presentation.generated.resources.error_invalid_email
 import chirp.feature.auth.presentation.generated.resources.error_invalid_password
 import chirp.feature.auth.presentation.generated.resources.error_invalid_username
 import com.plcoding.auth.domain.EmailValidator
+import com.plcoding.core.domain.auth.AuthService
+import com.plcoding.core.domain.util.DataError
+import com.plcoding.core.domain.util.onError
+import com.plcoding.core.domain.util.onSuccess
 import com.plcoding.core.domain.validation.PasswordValidator
 import com.plcoding.core.presentation.util.UiText
+import com.plcoding.core.presentation.util.toUiText
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class RegisterViewModel: ViewModel() {
+class RegisterViewModel(
+    private val authService: AuthService
+): ViewModel() {
+    private val eventChannel = Channel<RegisterEvent>()
+    val events = eventChannel.receiveAsFlow()
+
     private var hasLoadedIntitalData = false
 
     private val _state = MutableStateFlow(RegisterState())
@@ -35,9 +48,54 @@ class RegisterViewModel: ViewModel() {
 
     fun onAction(action: RegisterAction) {
         when (action) {
-            RegisterAction.OnLoginClick -> validateFormInputs()
+            RegisterAction.OnLoginClick -> Unit
             RegisterAction.OnInputTextFocusGained -> clearAllTextFieldErrors()
-            else -> Unit
+            RegisterAction.OnRegisterClick -> register()
+            RegisterAction.OnTogglePasswordVisibilityClick -> _state.update {
+                it.copy(
+                    isPasswordVisible = !it.isPasswordVisible
+                )
+            }
+        }
+    }
+
+    private fun register() {
+        if (!validateFormInputs()) return
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    isRegistering = true
+                )
+            }
+            val email = state.value.emailTextState.text.toString()
+            val username = state.value.usernameTextState.text.toString()
+            val password = state.value.passwordTextState.text.toString()
+
+            authService
+                .register(
+                    email = email,
+                    username = username,
+                    password = password
+                )
+                .onSuccess {
+                    _state.update {
+                        it.copy(
+                            isRegistering = false
+                        )
+                    }
+                }
+                .onError { error ->
+                    val registrationError = when(error) {
+                        DataError.Remote.CONFLICT -> UiText.Resource(Res.string.error_account_exists)
+                        else -> error.toUiText()
+                    }
+                    _state.update {
+                        it.copy(
+                            isRegistering = false,
+                            registrationError = registrationError
+                        )
+                    }
+                }
         }
     }
 

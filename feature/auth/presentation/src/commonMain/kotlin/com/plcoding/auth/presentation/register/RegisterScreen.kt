@@ -30,16 +30,23 @@ import com.plcoding.core.designsystem.components.textfields.ChirpPasswordTextFie
 import com.plcoding.core.designsystem.components.textfields.ChirpTextField
 import com.plcoding.core.designsystem.theme.ChirpTheme
 import com.plcoding.core.designsystem.theme.LocalDimensions
+import com.plcoding.core.presentation.util.ObserveAsEvents
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun RegisterRoot(
     viewModel: RegisterViewModel = viewModel(),
+    onRegisterSuccess: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+
+    ObserveAsEvents(flow = viewModel.events) { event ->
+        when(event) {
+            is RegisterEvent.Success -> onRegisterSuccess(event.email)
+        }
+    }
 
     RegisterScreen(
         state = state,
