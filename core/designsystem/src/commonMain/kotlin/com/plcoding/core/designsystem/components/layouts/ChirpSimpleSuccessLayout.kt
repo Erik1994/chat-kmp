@@ -26,6 +26,7 @@ fun ChirpSimpleSuccessLayout(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
+    secondaryError: String? = null,
     icon: @Composable () -> Unit,
     primaryButton: @Composable () -> Unit,
     secondaryButton: @Composable (() -> Unit)? = null,
@@ -61,6 +62,16 @@ fun ChirpSimpleSuccessLayout(
             secondaryButton?.let {
                 Spacer(modifier = Modifier.height(dimensions.dimen8))
                 it()
+                secondaryError?.let { error ->
+                    Spacer(modifier = Modifier.height(dimensions.dimen6))
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = error,
+                        style = MaterialTheme.typography.labelSmall,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
             }
         }
     }
