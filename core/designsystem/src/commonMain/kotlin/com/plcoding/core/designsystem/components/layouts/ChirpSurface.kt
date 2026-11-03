@@ -1,6 +1,5 @@
 package com.plcoding.core.designsystem.components.layouts
 
-import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
