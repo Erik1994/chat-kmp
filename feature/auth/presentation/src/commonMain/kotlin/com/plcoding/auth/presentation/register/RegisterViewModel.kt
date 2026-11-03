@@ -123,6 +123,7 @@ class RegisterViewModel(
                             isRegistering = false
                         )
                     }
+                    eventChannel.send(RegisterEvent.Success(email))
                 }
                 .onError { error ->
                     val registrationError = when (error) {
