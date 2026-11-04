@@ -1,6 +1,7 @@
 package com.plcoding.core.designsystem.components.layouts
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,12 +23,12 @@ import com.plcoding.core.designsystem.theme.extended
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun ChirpSimpleSuccessLayout(
+fun ChirpSimpleResultLayout(
     modifier: Modifier = Modifier,
     title: String,
     description: String,
     secondaryError: String? = null,
-    icon: @Composable () -> Unit,
+    icon: @Composable ColumnScope.() -> Unit,
     primaryButton: @Composable () -> Unit,
     secondaryButton: @Composable (() -> Unit)? = null,
 ) {
@@ -81,7 +82,7 @@ fun ChirpSimpleSuccessLayout(
 @Preview(showBackground = true)
 fun ChirpSimpleSuccessLayoutLightPreview() {
     ChirpTheme {
-        ChirpSimpleSuccessLayout(
+        ChirpSimpleResultLayout(
             modifier = Modifier.fillMaxWidth(),
             title = "Registration successful!",
             description = "You can now log in to your account.",
@@ -111,7 +112,7 @@ fun ChirpSimpleSuccessLayoutLightPreview() {
 @Preview(showBackground = false)
 fun ChirpSimpleSuccessLayoutDarkPreview() {
     ChirpTheme(darkTheme = true) {
-        ChirpSimpleSuccessLayout(
+        ChirpSimpleResultLayout(
             modifier = Modifier.fillMaxWidth(),
             title = "Registration successful!",
             description = "You can now log in to your account.",
