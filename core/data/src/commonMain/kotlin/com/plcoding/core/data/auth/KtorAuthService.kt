@@ -1,18 +1,36 @@
 package com.plcoding.core.data.auth
 
+import com.plcoding.core.data.auth.dto.AuthInfoSerializable
 import com.plcoding.core.data.auth.dto.requests.EmailRequest
+import com.plcoding.core.data.auth.dto.requests.LoginRequest
 import com.plcoding.core.data.auth.dto.requests.RegisterRequest
+import com.plcoding.core.data.mappers.toInfo
 import com.plcoding.core.data.network.get
 import com.plcoding.core.data.network.post
+import com.plcoding.core.domain.auth.AuthInfo
 import com.plcoding.core.domain.auth.AuthService
 import com.plcoding.core.domain.util.DataError
 import com.plcoding.core.domain.util.EmptyResult
+import com.plcoding.core.domain.util.Result
+import com.plcoding.core.domain.util.map
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 
 class KtorAuthService(
     private val httpClient: HttpClient
 ): AuthService {
+
+    override suspend fun login(
+        email: String,
+        password: String
+    ): Result<AuthInfo, DataError.Remote> = httpClient.post<LoginRequest, AuthInfoSerializable> (
+        route = "/auth/login",
+        body = LoginRequest(
+            email = email,
+            password = password
+        )
+    ).map(AuthInfoSerializable::toInfo)
+
     override suspend fun register(
         email: String,
         username: String,

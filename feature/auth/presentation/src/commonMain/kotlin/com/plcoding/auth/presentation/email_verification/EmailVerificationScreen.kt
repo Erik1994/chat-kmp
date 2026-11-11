@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import chirp.feature.auth.presentation.generated.resources.Res
 import chirp.feature.auth.presentation.generated.resources.close
 import chirp.feature.auth.presentation.generated.resources.email_verified_failed
@@ -40,13 +41,21 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun EmailVerificationRoot(
-    viewModel: EmailVerificationViewModel = koinViewModel()
+    viewModel: EmailVerificationViewModel = koinViewModel(),
+    onLoginClick: () -> Unit,
+    onCloseClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     EmailVerificationScreen(
         state = state,
-        onAction = viewModel::onAction
+        onAction = { action ->
+            when(action) {
+                EmailVerificationAction.OnCloseClick -> onCloseClick()
+                EmailVerificationAction.OnLoginClick -> onLoginClick()
+            }
+            viewModel.onAction(action)
+        }
     )
 }
 
