@@ -1,7 +1,7 @@
 package com.plcoding.core.data.mappers
 
-import com.plcoding.core.data.auth.dto.AuthInfoSerializable
-import com.plcoding.core.data.auth.dto.UserSerializable
+import com.plcoding.core.data.dto.AuthInfoSerializable
+import com.plcoding.core.data.dto.UserSerializable
 import com.plcoding.core.domain.auth.AuthInfo
 import com.plcoding.core.domain.auth.User
 

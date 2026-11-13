@@ -1,4 +1,4 @@
-package com.plcoding.core.data.auth.dto.requests
+package com.plcoding.core.data.dto.requests
 
 import kotlinx.serialization.Serializable
 
