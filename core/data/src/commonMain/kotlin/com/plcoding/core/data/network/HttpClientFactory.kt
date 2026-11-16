@@ -4,7 +4,6 @@ import com.plcoding.core.data.BuildKonfig
 import com.plcoding.core.data.dto.AuthInfoSerializable
 import com.plcoding.core.data.dto.requests.RefreshRequest
 import com.plcoding.core.data.mappers.toInfo
-import com.plcoding.core.data.network.post
 import com.plcoding.core.domain.auth.SessionStorage
 import com.plcoding.core.domain.logging.ChirpLogger
 import com.plcoding.core.domain.util.onError
@@ -22,7 +21,6 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.websocket.WebSockets
 import io.ktor.client.request.header
-import io.ktor.client.request.post
 import io.ktor.client.statement.request
 import io.ktor.http.ContentType
 import io.ktor.http.contentType

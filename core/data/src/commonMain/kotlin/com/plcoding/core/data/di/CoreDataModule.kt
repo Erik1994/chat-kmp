@@ -20,7 +20,7 @@ val coreDataModule = module {
         KermitLogger
     }
     single {
-        HttpClientFactory(chirpLogger = get()).create(engine = get())
+        HttpClientFactory(chirpLogger = get(), sessionStorage = get()).create(engine = get())
     }
     singleOf(::KtorAuthService) bind AuthService::class
     singleOf(::DataStoreSessionStorage) bind SessionStorage::class
