@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.plcoding.core.designsystem.theme.ChirpTheme
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -13,7 +14,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ChatListRoot(
-    //viewModel: ChatListViewModel = viewModel()
+    viewModel: ChatListViewModel = viewModel()
 ) {
     //val state by viewModel.state.collectAsStateWithLifecycle()
 
