@@ -1,6 +1,8 @@
 package com.plcoding.core.data.di
 
 import org.koin.core.module.Module
+import org.koin.dsl.module
 
-actual val platformCoreDataModule: Module
-    get() = TODO("Not yet implemented")
+actual val platformCoreDataModule: Module = module {
+    
+}

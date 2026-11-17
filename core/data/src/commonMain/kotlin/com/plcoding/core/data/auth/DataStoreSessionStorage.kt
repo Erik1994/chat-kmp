@@ -4,6 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.plcoding.core.data.dto.AuthInfoSerializable
+import com.plcoding.core.data.mappers.toInfo
 import com.plcoding.core.data.mappers.toSerializable
 import com.plcoding.core.domain.auth.AuthInfo
 import com.plcoding.core.domain.auth.SessionStorage
@@ -26,7 +28,7 @@ class DataStoreSessionStorage(
         .data.map { prefs ->
             val serializedJson = prefs[authInfoKey]
             serializedJson?.let {
-                json.decodeFromString(it)
+                json.decodeFromString<AuthInfoSerializable>(it).toInfo()
             }
         }
 
