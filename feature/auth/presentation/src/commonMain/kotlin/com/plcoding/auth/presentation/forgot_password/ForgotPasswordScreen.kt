@@ -73,8 +73,8 @@ fun ForgotPasswordScreen(
             enabled = state.canSubmit,
             isLoading = state.isLoading
         )
-        Spacer(modifier = Modifier.height(dimensions.dimen8))
         if (state.isEmailSentSuccessfully) {
+            Spacer(modifier = Modifier.height(dimensions.dimen8))
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(Res.string.forgot_password_email_sent_successfully),
