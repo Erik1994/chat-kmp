@@ -52,4 +52,9 @@ class KtorAuthService(
         route = "/auth/verify",
         queryParams = mapOf("token" to token)
     )
+
+    override suspend fun forgotPassword(email: String): EmptyResult<DataError.Remote> = httpClient.post<EmailRequest, Unit>(
+        route = "/auth/forgot-password",
+        body = EmailRequest(email)
+    )
 }
