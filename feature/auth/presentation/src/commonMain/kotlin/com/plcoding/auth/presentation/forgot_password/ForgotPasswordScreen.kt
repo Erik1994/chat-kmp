@@ -20,6 +20,7 @@ import chirp.feature.auth.presentation.generated.resources.submit
 import com.plcoding.core.designsystem.components.brand.ChirpBrandLogo
 import com.plcoding.core.designsystem.components.buttons.ChirpButton
 import com.plcoding.core.designsystem.components.layouts.ChirpAdaptiveFormLayout
+import com.plcoding.core.designsystem.components.layouts.ChirpSnackbarScaffold
 import com.plcoding.core.designsystem.components.textfields.ChirpTextField
 import com.plcoding.core.designsystem.theme.ChirpTheme
 import com.plcoding.core.designsystem.theme.LocalDimensions
@@ -46,42 +47,44 @@ fun ForgotPasswordScreen(
     onAction: (ForgotPasswordAction) -> Unit,
 ) {
     val dimensions = LocalDimensions.current
-    ChirpAdaptiveFormLayout(
-        headerText = stringResource(Res.string.forgot_password),
-        errorText = state.errorText?.asString(),
-        logo = {
-            ChirpBrandLogo()
-        }
-    ) {
-        ChirpTextField(
-            modifier = Modifier.fillMaxWidth(),
-            state = state.emailTextFieldState,
-            placeholder = stringResource(Res.string.email_placeholder),
-            title = stringResource(Res.string.email),
-            isError = state.errorText != null,
-            supportingText = state.errorText?.asString(),
-            keyboardType = KeyboardType.Email,
-            singleLine = true
-        )
-        Spacer(modifier = Modifier.height(dimensions.dimen16))
-        ChirpButton(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(Res.string.submit),
-            onClick = {
-                onAction(ForgotPasswordAction.OnSubmitClick)
-            },
-            enabled = state.canSubmit,
-            isLoading = state.isLoading
-        )
-        if (state.isEmailSentSuccessfully) {
-            Spacer(modifier = Modifier.height(dimensions.dimen8))
-            Text(
+    ChirpSnackbarScaffold {
+        ChirpAdaptiveFormLayout(
+            headerText = stringResource(Res.string.forgot_password),
+            errorText = state.errorText?.asString(),
+            logo = {
+                ChirpBrandLogo()
+            }
+        ) {
+            ChirpTextField(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(Res.string.forgot_password_email_sent_successfully),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.extended.success,
-                textAlign = TextAlign.Center
+                state = state.emailTextFieldState,
+                placeholder = stringResource(Res.string.email_placeholder),
+                title = stringResource(Res.string.email),
+                isError = state.errorText != null,
+                supportingText = state.errorText?.asString(),
+                keyboardType = KeyboardType.Email,
+                singleLine = true
             )
+            Spacer(modifier = Modifier.height(dimensions.dimen16))
+            ChirpButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(Res.string.submit),
+                onClick = {
+                    onAction(ForgotPasswordAction.OnSubmitClick)
+                },
+                enabled = state.canSubmit,
+                isLoading = state.isLoading
+            )
+            if (state.isEmailSentSuccessfully) {
+                Spacer(modifier = Modifier.height(dimensions.dimen8))
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = stringResource(Res.string.forgot_password_email_sent_successfully),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.extended.success,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }

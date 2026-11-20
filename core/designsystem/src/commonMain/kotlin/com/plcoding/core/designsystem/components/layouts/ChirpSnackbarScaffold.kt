@@ -17,7 +17,7 @@ import com.plcoding.core.designsystem.theme.LocalDimensions
 @Composable
 fun ChirpSnackbarScaffold(
     modifier: Modifier = Modifier,
-    snackbarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState? = null,
     content: @Composable () -> Unit
 ) {
     val dimensions = LocalDimensions.current
@@ -27,11 +27,13 @@ fun ChirpSnackbarScaffold(
             .union(WindowInsets.displayCutout)
             .union(WindowInsets.ime),
         snackbarHost = {
-            SnackbarHost(
-                hostState = snackbarHostState,
-                modifier = Modifier
-                    .padding(bottom = dimensions.dimen24)
-            )
+            snackbarHostState?.let {
+                SnackbarHost(
+                    hostState = it,
+                    modifier = Modifier
+                        .padding(bottom = dimensions.dimen24)
+                )
+            }
         }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {

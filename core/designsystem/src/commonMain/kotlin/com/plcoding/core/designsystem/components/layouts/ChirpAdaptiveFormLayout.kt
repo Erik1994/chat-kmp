@@ -32,6 +32,7 @@ import com.plcoding.core.designsystem.theme.ChirpTheme
 import com.plcoding.core.designsystem.theme.LocalDimensions
 import com.plcoding.core.designsystem.theme.extended
 import com.plcoding.core.presentation.util.DeviceConfiguration
+import com.plcoding.core.presentation.util.clearFocusOnTap
 import com.plcoding.core.presentation.util.currentDeviceConfiguration
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -55,10 +56,11 @@ fun ChirpAdaptiveFormLayout(
         DeviceConfiguration.MOBILE_PORTRAIT -> {
             ChirpSurface(
                 modifier = modifier
+                    .clearFocusOnTap()
                     .consumeWindowInsets(WindowInsets.navigationBars)
                     .consumeWindowInsets(WindowInsets.displayCutout),
                 header = {
-                    Spacer(modifier = Modifier.height(dimensions.dimen70))
+                    Spacer(modifier = Modifier.height(dimensions.dimen32))
                     logo()
                     Spacer(modifier = Modifier.height(dimensions.dimen32))
                 }
