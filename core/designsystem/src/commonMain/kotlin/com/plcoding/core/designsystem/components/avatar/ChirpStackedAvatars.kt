@@ -1,0 +1,75 @@
+package com.plcoding.core.designsystem.components.avatar
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import com.plcoding.core.designsystem.theme.ChirpTheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
+
+@Composable
+fun ChirpStackedAvatars(
+    modifier: Modifier = Modifier,
+    avatars: List<AvatarUi>,
+    size: AvatarSize = AvatarSize.SMALL,
+    maxVisible: Int = 2,
+    overlapPercentage: Float = 0.4f
+) {
+    val overlapOffset = -(size.dp * overlapPercentage)
+    val visibleAvatars = avatars.take(maxVisible)
+    val remainingCount = (avatars.size - maxVisible).coerceAtLeast(0)
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(overlapOffset),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        visibleAvatars.forEach { avatarUi ->
+            ChirpAvatarPhoto(
+                displayText = avatarUi.initials,
+                size = size,
+                imageUrl = avatarUi.imageUrl
+            )
+        }
+        if (remainingCount > 0) {
+            ChirpAvatarPhoto(
+                displayText = "$remainingCount+",
+                size = size,
+                textColor = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
+}
+
+@Composable
+@Preview
+fun ChirpStackedAvatarsPreview() {
+    ChirpTheme {
+        ChirpStackedAvatars(
+            avatars = listOf(
+                AvatarUi(
+                    id = "1",
+                    username = "Erik",
+                    initials = "ER"
+                ),
+                AvatarUi(
+                    id = "2",
+                    username = "Ripka",
+                    initials = "RI"
+                ),
+                AvatarUi(
+                    id = "3",
+                    username = "Lolik",
+                    initials = "LO"
+                ),
+                AvatarUi(
+                    id = "4",
+                    username = "Ddum",
+                    initials = "DD"
+                )
+            )
+        )
+    }
+}
